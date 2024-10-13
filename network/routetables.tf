@@ -23,25 +23,25 @@ resource "aws_route_table" "private" {
 }
 
 # パブリックサブネット1aへのルートテーブルアソシエーション
-resource "aws_route_table_association" "public-1a" {
-  subnet_id      = aws_subnet.public-1a.id
+resource "aws_route_table_association" "public_1a" {
+  subnet_id      = aws_subnet.public_1a.id
   route_table_id = aws_route_table.public.id
 }
 
 # パブリックサブネット1cへのルートテーブルアソシエーション
-resource "aws_route_table_association" "public-1c" {
-  subnet_id      = aws_subnet.public-1c.id
+resource "aws_route_table_association" "public_1c" {
+  subnet_id      = aws_subnet.public_1c.id
   route_table_id = aws_route_table.public.id
 }
 
 # プライベートサブネット1aへのルートテーブルアソシエーション
-resource "aws_route_table_association" "private-1a" {
-  subnet_id      = aws_subnet.private-1a.id
+resource "aws_route_table_association" "private_1a" {
+  subnet_id      = aws_subnet.private_1a.id
   route_table_id = aws_route_table.private.id
 }
 
 # プライベートサブネット1cへのルートテーブルアソシエーション
-resource "aws_route_table_association" "private-1c" {
-  subnet_id      = aws_subnet.private-1c.id
+resource "aws_route_table_association" "private_1c" {
+  subnet_id      = aws_subnet.private_1c.id
   route_table_id = aws_route_table.private.id
 }
