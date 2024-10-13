@@ -1,24 +1,11 @@
-# AWSプロバイダーの設定
-provider "aws" {
-  region = "ap-northeast-1"  # 東京リージョン
+
+
+module "network" {
+  source = "./network"
 }
 
-# VPCの作成
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-
-  tags = {
-    Name = "MainVPC"
-  }
-}
-
-# サブネットの作成
-resource "aws_subnet" "main" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-northeast-1a"
-
-  tags = {
-    Name = "MainSubnet"
-  }
+module "server" {
+  source = "./server"
+  subnet_id       = module.network.private_subnet_1a_id
+  security_groups = [module.network.security_group_ec2_id]
 }
