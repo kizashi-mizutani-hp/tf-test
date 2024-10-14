@@ -3,7 +3,7 @@ resource "aws_lb_target_group" "tg" {
   name     = "tf-test-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = var.main_vpc
+  vpc_id   = var.main_vpc_id
 
   health_check {
     path                = "/" ############# /index.phpなどに変更する必要があるかもしれない
@@ -26,8 +26,8 @@ resource "aws_lb" "alb" {
   name               = "tf-test-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = var.alb_sg
-  subnets            = [var.public_subnet_1a, var.public_subnet_1c]
+  security_groups    = var.alb_sg_id
+  subnets            = [var.public_subnet_1a_id, var.public_subnet_1c_id]
 
   tags = {
     Name = "tf-test-alb"

@@ -2,10 +2,10 @@
 resource "aws_instance" "ec2" {
   ami           = "ami-0ef29ab52ff72213b"  # Amazon Linux 2023 AMI
   instance_type = "t2.micro"
-  subnet_id     = var.private_subnet_1a
+  subnet_id     = var.private_subnet_1a_id
   key_name      = "wp-test"                # 事前に作成したキーペアを指定
 
-  security_groups = var.ec2_sg
+  security_groups = var.ec2_sg_id
 
   tags = {
     Name = "tf-test-ec2"
@@ -16,12 +16,12 @@ resource "aws_instance" "ec2" {
 resource "aws_instance" "bastion" {
   ami           = "ami-0ef29ab52ff72213b"  # Amazon Linux 2023 AMI
   instance_type = "t2.micro"
-  subnet_id     = var.public_subnet_1a
+  subnet_id     = var.public_subnet_1a_id
   key_name      = "wp-test"                # 事前に作成したキーペアを指定
 
-  security_groups = var.bastion_sg
+  security_groups = var.bastion_sg_id
 
   tags = {
-    Name = "tf-test-ec2"
+    Name = "tf-test-bastion"
   }
 }
