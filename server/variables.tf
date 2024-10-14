@@ -5,8 +5,20 @@ variable "vpc_id" {
 }
 
 # サブネットIDを受け取るための変数
+variable "public_subnet_1a_id" {
+  description = "The subnet ID for the public of 1a"
+  type        = string
+}
+
+# サブネットIDを受け取るための変数
+variable "public_subnet_1c_id" {
+  description = "The subnet ID for the public of 1c"
+  type        = string
+}
+
+# サブネットIDを受け取るための変数
 variable "private_subnet_id" {
-  description = "The subnet ID for the EC2 instance"
+  description = "The subnet ID for the private of 1a"
   type        = string
 }
 

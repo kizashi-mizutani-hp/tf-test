@@ -7,6 +7,8 @@ module "network" {
 module "server" {
   source = "./server"
   vpc_id = module.network.vpc_id
+  public_subnet_1a_id = module.network.public_subnet_1a_id
+  public_subnet_1c_id = module.network.public_subnet_1c_id
   private_subnet_id = module.network.private_subnet_1a_id
   ec2_sg = [module.network.security_group_ec2_sg_id]
   bastion_sg = [module.network.security_group_bastion_sg_id]
