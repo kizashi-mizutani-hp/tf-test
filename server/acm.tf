@@ -1,39 +1,36 @@
 
-# resource "aws_acm_certificate" "wordpress_cert" {
-#   domain_name       = "mizutani.7tagon.com"  # 使用するドメインを指定
-#   validation_method = "DNS"
+resource "aws_acm_certificate" "cert" {
+  # ワイルドカード証明書で同じドメイン内の複数のサイトを保護
+  domain_name               = "*.mizutani.7tagon.com"
+  # ネイキッドドメインや apex ドメイン(ドメイン名そのもの)を保護
+  subject_alternative_names = ["mizutani.7tagon.com"]
+  # ACMドメイン検証方法にDNS検証を指定
+  validation_method         = "DNS"
 
-#   tags = {
-#     Name = "tf-test-acm-cert"
-#   }
-# }
+  lifecycle {
+    create_before_destroy = true
+  }
 
-# resource "aws_route53_record" "wordpress_cert_validation" {
-#   name    = [aws_acm_certificate.wordpress_cert.domain_validation_options[0].resource_record_name]
-#   type    = [aws_acm_certificate.wordpress_cert.domain_validation_options[0].resource_record_type]
-#   zone_id = "Z055220039IXQ6KYLFFBI"  # Route53のゾーンID
-#   records = [aws_acm_certificate.wordpress_cert.domain_validation_options[0].resource_record_value]
-#   ttl     = 60
-# }
+  tags = {
+    Name = "tf-test-acm"
+  }
+}
 
-# resource "aws_acm_certificate_validation" "wordpress_cert_validation" {
-#   certificate_arn         = aws_acm_certificate.wordpress_cert.arn
-#   validation_record_fqdns = [aws_route53_record.wordpress_cert_validation.fqdn]
-# }
+resource "aws_route53_record" "cert_validation" {
+  for_each = {
+    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
 
+  allow_overwrite = true
+  name = each.value.name
+  records = [each.value.record]
+  type = each.value.type
+  ttl = "300"
 
-# resource "aws_route53_record" "wordpress_cert_validation" {
-#   for_each = {
-#     for dvo in aws_acm_certificate.wordpress_cert.domain_validation_options : dvo.domain_name => {
-#       name   = dvo.resource_record_name
-#       type   = dvo.resource_record_type
-#       record = dvo.resource_record_value
-#     }
-#   }
-
-#   zone_id = "Z055220039IXQ6KYLFFBI"  # Route 53のゾーンID
-#   name    = each.value.name
-#   type    = each.value.type
-#   records = [each.value.record]
-#   ttl     = 60
-# }
+  # レコードを追加するドメインのホストゾーンIDを指定
+  zone_id = "Z055220039IXQ6KYLFFBI"
+}

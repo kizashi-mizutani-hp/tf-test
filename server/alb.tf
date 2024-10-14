@@ -9,6 +9,7 @@ resource "aws_lb_target_group" "tg" {
     path                = "/" ############# /index.phpなどに変更する必要があるかもしれない
     protocol            = "HTTP"
     matcher             = "200"
+    port                = "traffic-port"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 3
@@ -34,13 +35,13 @@ resource "aws_lb" "alb" {
 }
 
 # リスナー 443
-resource "aws_lb_listener" "https" {
+resource "aws_lb_listener" "alb_https" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 443
   protocol          = "HTTPS"
 
-  ssl_policy        = "ELBSecurityPolicy-2016-08"  # 必要に応じてセキュリティポリシーを変更
-  # certificate_arn   = [aws_acm_certificate_validation.wordpress_cert_validation.certificate_arn]
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {
     type             = "forward"
