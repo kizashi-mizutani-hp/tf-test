@@ -6,18 +6,6 @@
 
 ######################################## */
 
-# 共通タグ用の変数
-variable "common_tags" {
-  description = "A map of common tags"
-  type        = map(string)
-  default = {
-    Project     = "tf-test"
-    Environment = "-"
-    Owner       = "-"
-    CostCenter  = "tf-test"
-  }
-}
-
 # VPCIDを受け取るための変数
 variable "main_vpc_id" {
   description = "The VPC ID for the ALB"

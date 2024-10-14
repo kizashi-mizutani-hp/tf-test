@@ -7,12 +7,9 @@ resource "aws_instance" "ec2" {
 
   security_groups = var.ec2_sg_id
 
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.defult.Project}-ec2"
-    }
-  )
+  tags = {
+    Name = "tf-test-ec2"
+  }
 }
 
 # bastionの作成
@@ -24,10 +21,7 @@ resource "aws_instance" "bastion" {
 
   security_groups = var.bastion_sg_id
 
-  tags = merge(
-    var.common_tags,
-    {
-      Name = "${var.defult.Project}-bastion"
-    }
-  )
+  tags = {
+    Name = "tf-test-bastion"
+  }
 }
