@@ -26,4 +26,13 @@ resource "aws_instance" "bastion" {
     Name = "tf-test-bastion"
     CostCenter = var.cost_center
   }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo dnf update -y
+              sudo dnf install -y httpd
+              sudo systemctl start httpd
+              sudo systemctl enable httpd
+              echo "<html><body><h1>OK</h1></body></html>" > /var/www/html/status
+              EOF
 }

@@ -4,9 +4,10 @@ resource "aws_lb_target_group" "tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.main_vpc_id
+  target_type = "instance"
 
   health_check {
-    path                = "/" ############# /index.phpなどに変更する必要があるかもしれない
+    path                = "/status"
     protocol            = "HTTP"
     matcher             = "200"
     port                = "traffic-port"
@@ -19,6 +20,13 @@ resource "aws_lb_target_group" "tg" {
   tags = {
     Name = "tf-test-tg"
   }
+}
+
+# EC2をターゲットにアタッチする設定
+resource "aws_lb_target_group_attachment" "ec2_attachment" {
+  target_group_arn = aws_lb_target_group.tg.arn
+  target_id        = aws_instance.ec2.id
+  port             = 80
 }
 
 # alb
