@@ -48,5 +48,6 @@ resource "aws_cloudfront_distribution" "wordpress_distribution" {
 
   tags = {
     Name = "tf-test-cloudfront-distribution"
+    CostCenter = var.cost_center
   }
 }

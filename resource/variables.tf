@@ -6,6 +6,14 @@
 
 ######################################## */
 
+
+# CostCenterの変数を追加
+variable "cost_center" {
+  description = "Cost Center for resource tracking"
+  type        = string
+  default     = "12345"  # デフォルトのCost Center番号
+}
+
 # VPCIDを受け取るための変数
 variable "main_vpc_id" {
   description = "The VPC ID for the ALB"

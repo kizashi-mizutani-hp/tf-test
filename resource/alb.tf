@@ -31,6 +31,7 @@ resource "aws_lb" "alb" {
 
   tags = {
     Name = "tf-test-alb"
+    CostCenter = var.cost_center
   }
 }
 

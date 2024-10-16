@@ -9,6 +9,7 @@ resource "aws_instance" "ec2" {
 
   tags = {
     Name = "tf-test-ec2"
+    CostCenter = var.cost_center
   }
 }
 
@@ -23,5 +24,6 @@ resource "aws_instance" "bastion" {
 
   tags = {
     Name = "tf-test-bastion"
+    CostCenter = var.cost_center
   }
 }
